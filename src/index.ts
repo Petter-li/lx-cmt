@@ -1,1 +1,7 @@
-console.log('lx-cmt 被执行了')
+const { Command } = require('commander');
+const { vs } = require('./constants');
+const program = new Command();
+program.version(vs).parse(process.argv);
+
+
+require('./create')();
