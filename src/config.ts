@@ -15,15 +15,12 @@ module.exports = {
   ],
   scopes: [],
   messages: {
-    type: '选择更改类型:\n',
-    scope: '更改的范围:\n',
-    // 如果allowcustomscopes为true，则使用
-    // customScope: 'Denote the SCOPE of this change:',
-    subject: '简短描述:\n',
-    body: '详细描述. 使用"|"换行:\n',
-    breaking: 'Breaking Changes列表:\n',
-    footer: '关闭的issues列表. E.g.: #31, #34:\n',
-    confirmCommit: '确认提交?',
+    type: '请选择更改类型:',
+    scope: '请输入更改范围(可选):',
+    subject: '请输入简短描述(必填):',
+    body: '请输入详细描述(可选):',
+    footer: '请输入要关闭的issues(可选):',
+    confirmCommit: '确认使用以上信息提交(y/n)?',
   },
   simple: true
 };
