@@ -1,6 +1,6 @@
 const Inquirer = require('inquirer');
 const shell = require('shelljs');
-const config = require('./config');
+const config = require('./cg');
 const { types, messages, simple } = config;
 interface resultsObject {
   type?: string;
