@@ -2,16 +2,6 @@ const { Command } = require('commander');
 const { vs } = require('./constants');
 const path = require('path');
 const program = new Command();
-// program.version(vs).parse(process.argv);
-
-/* program
-  .version(vs)
-  .description('make git commit message')
-  .option(' ', 'make git commit message')
-  .option('-C, --config set| get <k> <v>', 'git-cmt config set <k> <v> | git-cmt config get <k>')
-  .option('-E, --example', 'show all example')
-  .parse(process.argv) */
-
 
 interface ACTIONSMAP {
   [propName: string | symbol]: {
@@ -25,15 +15,15 @@ const mapActions: ACTIONSMAP = {
     alias: 'conf',
     description: 'config project variable',
     examples: [
-      'git-cmt config set <k><v>',
-      'git-cmt config get <k>',
+      'git-cmt config set simple false',
+      'git-cmt config get simple',
     ],
   },
   'example': {
     alias: 'ex',
     description: 'show all example',
     examples: [
-      'git-cmt help'
+      'git-cmt example'
     ],
   },
 };
@@ -79,7 +69,7 @@ if (args.length > 0) {
         if (action === 'example') {
           helpText();
         } else {
-          //git-cmt config xxx //获取参数数组 [node环境, git-cmt所在目录, create, xxx]
+          //git-cmt config xxx //获取参数数组 [node环境, git-cmt所在目录, config, xxx]
           require(path.resolve(__dirname, action))(...process.argv.slice(3));
         }
       });
