@@ -10,6 +10,16 @@ interface resultsObject {
   footer?: string;
 }
 module.exports = async () => {
+  const checkResult = shell.exec(`git status`, {silent:true});
+  if(checkResult.code !== 0) {
+    shell.echo('Error: Git commit failed');
+    shell.exit(1);
+  }
+  const str = checkResult.stdout;
+  if(str.includes('nothing to commit, working tree clean') || str.includes('no changes added to commit')) {
+    console.log(str);
+    return;
+  }
   filesys.readFile(cmtpath.resolve(__dirname, '../cg.json'), 'utf8', async (err: any, data: string) => {
     if (err) throw err;
     const config = JSON.parse(data);
