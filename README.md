@@ -4,7 +4,7 @@
 git commit信息生成工具
 
 ### 库的使用
-全局安装：npm install git-cmt -g   
+全局安装：npm install lx-cmt -g   
 使用举例：   
 执行git add 后，执行git-cmt  
 
