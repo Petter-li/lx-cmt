@@ -2,6 +2,7 @@ const Inquirer = require('inquirer');
 const shell = require('shelljs');
 const filesys = require('fs');
 const cmtpath = require('path');
+const ora = require('ora');
 interface resultsObject {
   type?: string;
   scope?: string;
@@ -10,16 +11,22 @@ interface resultsObject {
   footer?: string;
 }
 module.exports = async () => {
+  const spinner = ora('check status...\n');
+  spinner.start();
   const checkResult = shell.exec(`git status`, {silent:true});
   if(checkResult.code !== 0) {
+    spinner.stop();
     shell.echo('Error: Git commit failed');
     shell.exit(1);
+    return;
   }
   const str = checkResult.stdout;
   if(str.includes('nothing to commit, working tree clean') || str.includes('no changes added to commit')) {
     console.log(str);
+    spinner.stop();
     return;
   }
+  spinner.stop();
   filesys.readFile(cmtpath.resolve(__dirname, '../cg.json'), 'utf8', async (err: any, data: string) => {
     if (err) throw err;
     const config = JSON.parse(data);
@@ -90,10 +97,14 @@ module.exports = async () => {
 
 
     if (confirmCommit) {
+      const spinner = ora('committing...\n');
+      spinner.start();
       if (shell.exec(`git commit -m ${str}`).code !== 0) {
+        spinner.succeed();
         shell.echo('Error: Git commit failed');
         shell.exit(1);
       }
+      spinner.succeed();
     } else {
       return;
     }
