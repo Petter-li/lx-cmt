@@ -17,7 +17,7 @@ module.exports = async () => {
   shell.exec(`git status`, { async: true, silent: true, cwd: cwdPath }, function (checkCode: number, checkStdout: any, checkStderr: any) {
     if (checkCode !== 0) {
       spinner.stop();
-      shell.echo('Error: Git commit failed');
+      shell.echo('Error: Git status failed');
       shell.exit(1);
       return;
     }
@@ -100,10 +100,11 @@ module.exports = async () => {
       if (confirmCommit) {
         const spinner = ora('committing...\n');
         spinner.start();
-        shell.exec(`git commit -m ${str}`, { async: true, cwd: cwdPath }, function (cmtCode: number, cmtStdout: any, cmtStderr: any) {
+        shell.exec(`git commit -m "${str}"`, { async: true, cwd: cwdPath }, function (cmtCode: number, cmtStdout: any, cmtStderr: any) {
           if (cmtCode !== 0) {
             spinner.succeed();
-            shell.echo(cmtStdout);
+            console.log(cmtStdout);
+            console.log(cmtStderr);
             shell.echo('Error: Git commit failed');
             shell.exit(1);
           }
