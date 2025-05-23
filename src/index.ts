@@ -26,6 +26,27 @@ const mapActions: ACTIONSMAP = {
       'git-cmt example'
     ],
   },
+  'pushc': {
+    alias: 'phc',
+    description: 'push to current branch',
+    examples: [
+      'git-pushc'
+    ],
+  },
+  'pullc': {
+    alias: 'plc',
+    description: 'pull from current branch',
+    examples: [
+      'git-pullc'
+    ],
+  },
+  'checkout': {
+    alias: 'co',
+    description: 'checkout branch by name',
+    examples: [
+      'git-checkout master'
+    ],
+  },
 };
 
 const helpText = () => {
@@ -68,6 +89,12 @@ if (args.length > 0) {
         // 访问不到对应的命令 就打印找不到命令
         if (action === 'example') {
           helpText();
+        } else if (action === 'checkout') {
+          require(path.resolve(__dirname, action))(process.argv[3]);
+        } else if (action === 'pushc') {
+          require(path.resolve(__dirname, action))();
+        } else if (action === 'pullc') {
+          require(path.resolve(__dirname, action))();
         } else {
           //git-cmt config xxx //获取参数数组 [node环境, git-cmt所在目录, config, xxx]
           require(path.resolve(__dirname, action))(...process.argv.slice(3));
